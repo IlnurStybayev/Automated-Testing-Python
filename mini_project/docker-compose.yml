@@ -1,0 +1,53 @@
+# docker-compose.yml
+
+version: '3' # Используем третью версию синтаксиса docker-compose файла
+
+services: # Определяем сервисы, которые будут использоваться в приложении
+
+  db: # Сервис базы данных
+    image: postgres:13 # Используем официальный образ PostgreSQL версии 13
+    environment: # Устанавливаем переменные окружения для PostgreSQL
+      POSTGRES_DB: myappdb # Имя базы данных
+      POSTGRES_USER: myappuser # Имя пользователя
+      POSTGRES_PASSWORD: myapppassword # Пароль пользователя
+      POSTGRES_HOST_AUTH_METHOD: md5 # Метод аутентификации
+    ports:
+      - "5432:5432" # Пробрасываем порт для доступа к PostgreSQL
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Создаем том для хранения данных PostgreSQL
+    networks:
+      - myapp_network # Подключаем к сети myapp_network
+
+  dbadmin: # Сервис администрирования базы данных
+    image: dpage/pgadmin4 # Используем образ PgAdmin 4
+    environment: # Устанавливаем переменные окружения для PgAdmin
+      PGADMIN_DEFAULT_EMAIL: admin@example.com # Email для входа в PgAdmin
+      PGADMIN_DEFAULT_PASSWORD: admin # Пароль для входа в PgAdmin
+    ports:
+      - "8081:80"  # Пробрасываем порт для доступа к PgAdmin
+    depends_on:
+      - db # Указываем, что dbadmin зависит от сервиса db
+    networks:
+      - myapp_network # Подключаем к сети myapp_network
+
+  web: # Сервис веб-приложения
+    build: . # Собираем образ веб-приложения из текущей директории
+    command: ["./docker-entrypoint.sh", "web"] # Команда для запуска веб-приложения
+    volumes:
+      - .:/app # Монтируем текущую директорию в /app внутри контейнера
+    ports:
+      - "8000:8000" # Пробрасываем порт для доступа к веб-приложению
+    depends_on:
+      - db # Указываем, что веб-приложение зависит от сервиса db
+    environment: # Устанавливаем переменные окружения для веб-приложения
+      DATABASE_URL: postgres://myappuser:myapppassword@db:5432/myappdb # URL для подключения к базе данных
+    entrypoint: ["./docker-entrypoint.sh"] # Указываем entrypoint скрипт
+    networks:
+      - myapp_network # Подключаем к сети myapp_network
+    restart: always # Перезапускаем сервис при любых сбоях
+
+networks: # Определяем сети, используемые в нашем docker-compose
+  myapp_network: # Сеть для связи между контейнерами
+
+volumes: # Определяем тома, используемые в нашем docker-compose
+  postgres_data: # Том для данных PostgreSQL

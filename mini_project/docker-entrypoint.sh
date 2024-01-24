@@ -1,0 +1,38 @@
+#!/bin/bash
+# docker-entrypoint.sh
+# Этот скрипт используется как entrypoint для Docker-контейнера.
+# Он ожидает доступности PostgreSQL перед выполнением переданных команд.
+
+set -e
+
+# Параметры для подключения к PostgreSQL
+host="$1"
+shift
+cmd="$@"
+
+# Вывести сообщение о начале ожидания доступности PostgreSQL
+echo "Waiting for PostgreSQL to become available on host $host with user $POSTGRES_USER..."
+
+# Установите желаемый таймаут ожидания доступности PostgreSQL
+timeout=30  
+max_attempts=$((timeout + 1))  # Максимальное число попыток
+attempt=1
+
+# Попытка подключения к PostgreSQL до истечения числа попыток
+until PGPASSWORD=$POSTGRES_PASSWORD psql -h "$host" -U "$POSTGRES_USER" -c '\q'; do
+  # Проверка достижения максимального числа попыток
+  if [ "$attempt" -eq "$max_attempts" ]; then
+    echo "Max attempts reached. Postgres is still unavailable."
+    exit 1
+  fi
+
+  # Вывести сообщение о попытке подключения и ожидании
+  echo "Attempt $attempt: Postgres is unavailable - sleeping"
+  echo "Host: $host, User: $POSTGRES_USER"
+  sleep 1
+  ((attempt++))
+done
+
+# После успешного подключения к PostgreSQL выполнить переданную команду
+echo "Postgres is up - executing command"
+exec $cmd

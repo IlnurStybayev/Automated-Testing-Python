@@ -1,0 +1,81 @@
+# git rm -r --cached __pycache__/
+# git commit -m "Remove __pycache__ from version control."
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+media/
+
+# Pytest
+.pytest_cache/
+
+# Virtual environment
+venv/
+ENV/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# PyCharm
+.idea/
+*.swp
+
+# mypy
+.mypy_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# macOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux specific
+.*~
+
+# User-specific files
+*.sublime-workspace
+
+# Secret keys
+*.pem
+*.key
+
+# Docker related
+docker-compose.override.yml
+
+# Environment variables
+.env
+
