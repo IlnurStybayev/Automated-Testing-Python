@@ -1,25 +1,26 @@
-# test_sqlalchemy_models.py
+# tests/test_sqlalchemy_models.py
 import pytest
-from myapp.models import MyModel
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from myapp.sqlalchemy_models import SQLAlchemyTask, Base
 
 @pytest.fixture
 def session():
-    # Используем память SQLite для тестов
     engine = create_engine('sqlite:///:memory:')
-    MyModel.metadata.create_all(engine)
+    Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
-    return Session()
+    session = Session()
+    yield session
+    session.close()
 
-def test_create_and_query_model(session):
+def test_create_and_query_sqlalchemy_model(session):
     # Создание объекта модели
-    test_object = MyModel(name="Test Object")
+    test_object = SQLAlchemyTask(title="Test Object", completed=False)
     session.add(test_object)
     session.commit()
 
     # Запрос объекта из базы данных
-    query_result = session.query(MyModel).filter_by(name="Test Object").first()
-    
+    query_result = session.query(SQLAlchemyTask).filter_by(title="Test Object").first()
+
     assert query_result is not None
-    assert query_result.name == "Test Object"
+    assert query_result.title == "Test Object"
