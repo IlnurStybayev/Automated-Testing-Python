@@ -1,4 +1,0 @@
-#pip install -r requirements.txt
-Django
-psycopg2
-selenium

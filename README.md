@@ -78,6 +78,7 @@ docker-compose up -d
 
 http://localhost:8000
 http://localhost:8081
+http://127.0.0.1:8000
 
 4. Running Migrations
 
@@ -108,6 +109,8 @@ docker-compose ps
 docker-compose logs                                                - Просмотр логов
 docker-compose logs db                                             - Просмотр логов контейнера базы данных.
 docker-compose logs web                                            - Просмотр логов контейнера веб-приложения.
+docker-compose restart python_test-web-1
+docker-compose restart python_test-db-1
 3. Подключение к базе данных
 psql -h db -U myappuser -d myappdb                                 - Подключение к базе данных из хост-машины с использованием psql.
 docker-compose exec web psql -h db -U myappuser -d myappdb         - Подключение к базе данных из контейнера веб-приложения с использованием psql.
