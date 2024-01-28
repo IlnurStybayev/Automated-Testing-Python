@@ -1,0 +1,378 @@
+.Python_test
+.
+├── CONTRIBUTING.md
+├── Dockerfile
+├── GIT.txt
+├── LICENSE.md
+├── README.md
+├── __pycache__
+│   ├── calculator.cpython-312.pyc
+│   ├── test_calculator.cpython-312-pytest-7.4.4.pyc
+│   ├── test_exceptions.cpython-312-pytest-7.4.4.pyc
+│   ├── test_fixtures.cpython-312-pytest-7.4.4.pyc
+│   ├── test_markers.cpython-312-pytest-7.4.4.pyc
+│   ├── test_parametrize_example.cpython-312-pytest-7.4.4.pyc
+│   ├── test_selenium.cpython-312-pytest-7.4.4.pyc
+│   └── test_selenium.cpython-38.pyc
+├── debug_info.sh
+├── debug_log.txt
+├── docker-compose.yml
+├── docker-entrypoint.sh.temp
+├── htmlcov
+│   ├── coverage_html.js
+│   ├── d_6d04c9a742697252_0001_initial_py.html
+│   ├── d_6d04c9a742697252_0002_rename_title_task_name_remove_task_completed_py.html
+│   ├── d_6d04c9a742697252___init___py.html
+│   ├── d_a44f0ac069e85531_calculator_py.html
+│   ├── d_a44f0ac069e85531_test_async_code_py.html
+│   ├── d_a44f0ac069e85531_test_calculator_py.html
+│   ├── d_a44f0ac069e85531_test_django_models_py.html
+│   ├── d_a44f0ac069e85531_test_exceptions_py.html
+│   ├── d_a44f0ac069e85531_test_fixtures_py.html
+│   ├── d_a44f0ac069e85531_test_markers_py.html
+│   ├── d_a44f0ac069e85531_test_parametrize_example_py.html
+│   ├── d_a44f0ac069e85531_test_rest_api_py.html
+│   ├── d_a44f0ac069e85531_test_sqlalchemy_models_py.html
+│   ├── d_c134d258c825ceb8___init___py.html
+│   ├── d_c134d258c825ceb8_admin_py.html
+│   ├── d_c134d258c825ceb8_apps_py.html
+│   ├── d_c134d258c825ceb8_models_py.html
+│   ├── d_c134d258c825ceb8_selenium_tests_py.html
+│   ├── d_c134d258c825ceb8_sqlalchemy_models_py.html
+│   ├── d_c134d258c825ceb8_tests_py.html
+│   ├── d_c134d258c825ceb8_views_py.html
+│   ├── d_e02ee589c3c33056___init___py.html
+│   ├── d_e02ee589c3c33056_asgi_py.html
+│   ├── d_e02ee589c3c33056_settings_py.html
+│   ├── d_e02ee589c3c33056_urls_py.html
+│   ├── d_e02ee589c3c33056_wsgi_py.html
+│   ├── favicon_32.png
+│   ├── index.html
+│   ├── keybd_closed.png
+│   ├── keybd_open.png
+│   ├── manage_py.html
+│   ├── status.json
+│   ├── style.css
+│   └── test_selenium_py.html
+├── manage.py
+├── mini_project
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── __init__.cpython-38.pyc
+│   │   ├── settings.cpython-312.pyc
+│   │   ├── settings.cpython-38.pyc
+│   │   ├── urls.cpython-312.pyc
+│   │   ├── urls.cpython-38.pyc
+│   │   ├── wsgi.cpython-312.pyc
+│   │   └── wsgi.cpython-38.pyc
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── myapp
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── __init__.cpython-38.pyc
+│   │   ├── admin.cpython-312.pyc
+│   │   ├── admin.cpython-38.pyc
+│   │   ├── apps.cpython-312.pyc
+│   │   ├── apps.cpython-38.pyc
+│   │   ├── models.cpython-312.pyc
+│   │   ├── models.cpython-38.pyc
+│   │   ├── selenium_tests.cpython-312-pytest-7.4.4.pyc
+│   │   ├── selenium_tests.cpython-312.pyc
+│   │   ├── sqlalchemy_models.cpython-312.pyc
+│   │   ├── tests.cpython-312.pyc
+│   │   ├── tests.cpython-38.pyc
+│   │   ├── views.cpython-312.pyc
+│   │   └── views.cpython-38.pyc
+│   ├── admin.py
+│   ├── apps.py
+│   ├── migrations
+│   │   ├── 0001_initial.py
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       ├── 0001_initial.cpython-312.pyc
+│   │       ├── 0001_initial.cpython-38.pyc
+│   │       ├── 0002_rename_title_task_name_remove_task_completed.cpython-312.pyc
+│   │       ├── 0002_rename_title_task_name_remove_task_completed.cpython-38.pyc
+│   │       ├── __init__.cpython-312.pyc
+│   │       └── __init__.cpython-38.pyc
+│   ├── models.py
+│   ├── selenium_tests.py
+│   ├── sqlalchemy_models.py
+│   ├── static
+│   │   ├── css
+│   │   │   └── styles.css
+│   │   └── js
+│   │       └── task-actions.js
+│   ├── staticfiles
+│   │   ├── admin
+│   │   │   ├── css
+│   │   │   │   ├── autocomplete.css
+│   │   │   │   ├── base.css
+│   │   │   │   ├── changelists.css
+│   │   │   │   ├── dark_mode.css
+│   │   │   │   ├── dashboard.css
+│   │   │   │   ├── forms.css
+│   │   │   │   ├── login.css
+│   │   │   │   ├── nav_sidebar.css
+│   │   │   │   ├── responsive.css
+│   │   │   │   ├── responsive_rtl.css
+│   │   │   │   ├── rtl.css
+│   │   │   │   ├── vendor
+│   │   │   │   └── widgets.css
+│   │   │   ├── img
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── README.txt
+│   │   │   │   ├── calendar-icons.svg
+│   │   │   │   ├── gis
+│   │   │   │   ├── icon-addlink.svg
+│   │   │   │   ├── icon-alert.svg
+│   │   │   │   ├── icon-calendar.svg
+│   │   │   │   ├── icon-changelink.svg
+│   │   │   │   ├── icon-clock.svg
+│   │   │   │   ├── icon-deletelink.svg
+│   │   │   │   ├── icon-hidelink.svg
+│   │   │   │   ├── icon-no.svg
+│   │   │   │   ├── icon-unknown-alt.svg
+│   │   │   │   ├── icon-unknown.svg
+│   │   │   │   ├── icon-viewlink.svg
+│   │   │   │   ├── icon-yes.svg
+│   │   │   │   ├── inline-delete.svg
+│   │   │   │   ├── search.svg
+│   │   │   │   ├── selector-icons.svg
+│   │   │   │   ├── sorting-icons.svg
+│   │   │   │   ├── tooltag-add.svg
+│   │   │   │   └── tooltag-arrowright.svg
+│   │   │   └── js
+│   │   │       ├── SelectBox.js
+│   │   │       ├── SelectFilter2.js
+│   │   │       ├── actions.js
+│   │   │       ├── admin
+│   │   │       ├── autocomplete.js
+│   │   │       ├── calendar.js
+│   │   │       ├── cancel.js
+│   │   │       ├── change_form.js
+│   │   │       ├── collapse.js
+│   │   │       ├── core.js
+│   │   │       ├── filters.js
+│   │   │       ├── inlines.js
+│   │   │       ├── jquery.init.js
+│   │   │       ├── nav_sidebar.js
+│   │   │       ├── popup_response.js
+│   │   │       ├── prepopulate.js
+│   │   │       ├── prepopulate_init.js
+│   │   │       ├── theme.js
+│   │   │       ├── urlify.js
+│   │   │       └── vendor
+│   │   └── js
+│   │       ├── styles.css
+│   │       └── task-actions.js
+│   ├── templates
+│   │   └── myapp
+│   │       └── task_list.html
+│   ├── tests.py
+│   └── views.py
+├── pytest.ini
+├── requirements.txt
+├── runserver.sh
+├── start_docker.sh
+├── start_project.sh
+├── staticfiles
+│   ├── admin
+│   │   ├── css
+│   │   │   ├── autocomplete.css
+│   │   │   ├── base.css
+│   │   │   ├── changelists.css
+│   │   │   ├── dark_mode.css
+│   │   │   ├── dashboard.css
+│   │   │   ├── forms.css
+│   │   │   ├── login.css
+│   │   │   ├── nav_sidebar.css
+│   │   │   ├── responsive.css
+│   │   │   ├── responsive_rtl.css
+│   │   │   ├── rtl.css
+│   │   │   ├── vendor
+│   │   │   │   └── select2
+│   │   │   └── widgets.css
+│   │   ├── img
+│   │   │   ├── LICENSE
+│   │   │   ├── README.txt
+│   │   │   ├── calendar-icons.svg
+│   │   │   ├── gis
+│   │   │   │   ├── move_vertex_off.svg
+│   │   │   │   └── move_vertex_on.svg
+│   │   │   ├── icon-addlink.svg
+│   │   │   ├── icon-alert.svg
+│   │   │   ├── icon-calendar.svg
+│   │   │   ├── icon-changelink.svg
+│   │   │   ├── icon-clock.svg
+│   │   │   ├── icon-deletelink.svg
+│   │   │   ├── icon-hidelink.svg
+│   │   │   ├── icon-no.svg
+│   │   │   ├── icon-unknown-alt.svg
+│   │   │   ├── icon-unknown.svg
+│   │   │   ├── icon-viewlink.svg
+│   │   │   ├── icon-yes.svg
+│   │   │   ├── inline-delete.svg
+│   │   │   ├── search.svg
+│   │   │   ├── selector-icons.svg
+│   │   │   ├── sorting-icons.svg
+│   │   │   ├── tooltag-add.svg
+│   │   │   └── tooltag-arrowright.svg
+│   │   └── js
+│   │       ├── SelectBox.js
+│   │       ├── SelectFilter2.js
+│   │       ├── actions.js
+│   │       ├── admin
+│   │       │   ├── DateTimeShortcuts.js
+│   │       │   └── RelatedObjectLookups.js
+│   │       ├── autocomplete.js
+│   │       ├── calendar.js
+│   │       ├── cancel.js
+│   │       ├── change_form.js
+│   │       ├── collapse.js
+│   │       ├── core.js
+│   │       ├── filters.js
+│   │       ├── inlines.js
+│   │       ├── jquery.init.js
+│   │       ├── nav_sidebar.js
+│   │       ├── popup_response.js
+│   │       ├── prepopulate.js
+│   │       ├── prepopulate_init.js
+│   │       ├── theme.js
+│   │       ├── urlify.js
+│   │       └── vendor
+│   │           ├── jquery
+│   │           ├── select2
+│   │           └── xregexp
+│   ├── css
+│   │   └── styles.css
+│   └── js
+│       └── task-actions.js
+├── stop_docker.sh
+├── stop_project.sh
+├── structure.txt
+├── tests
+│   ├── __pycache__
+│   │   ├── calculator.cpython-312.pyc
+│   │   ├── test_async_code.cpython-312-pytest-7.4.4.pyc
+│   │   ├── test_calculator.cpython-312-pytest-7.4.4.pyc
+│   │   ├── test_django_models.cpython-312-pytest-7.4.4.pyc
+│   │   ├── test_exceptions.cpython-312-pytest-7.4.4.pyc
+│   │   ├── test_fixtures.cpython-312-pytest-7.4.4.pyc
+│   │   ├── test_markers.cpython-312-pytest-7.4.4.pyc
+│   │   ├── test_parametrize_example.cpython-312-pytest-7.4.4.pyc
+│   │   ├── test_rest_api.cpython-312-pytest-7.4.4.pyc
+│   │   └── test_sqlalchemy_models.cpython-312-pytest-7.4.4.pyc
+│   ├── calculator.py
+│   ├── test_async_code.py
+│   ├── test_calculator.py
+│   ├── test_django_models.py
+│   ├── test_exceptions.py
+│   ├── test_fixtures.py
+│   ├── test_markers.py
+│   ├── test_parametrize_example.py
+│   ├── test_rest_api.py
+│   ├── test_selenium.py
+│   └── test_sqlalchemy_models.py
+└── venv
+    ├── bin
+    │   ├── Activate.ps1
+    │   ├── activate
+    │   ├── activate.csh
+    │   ├── activate.fish
+    │   ├── coverage
+    │   ├── coverage-3.12
+    │   ├── coverage3
+    │   ├── django-admin
+    │   ├── normalizer
+    │   ├── pip
+    │   ├── pip3
+    │   ├── pip3.12
+    │   ├── py.test
+    │   ├── pytest
+    │   ├── python -> python3.12
+    │   ├── python3 -> python3.12
+    │   ├── python3.12 -> /Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12
+    │   └── sqlformat
+    ├── include
+    │   └── python3.12
+    ├── lib
+    │   └── python3.12
+    │       └── site-packages
+    │           ├── Django-5.0.1.dist-info
+    │           ├── PySocks-1.7.1.dist-info
+    │           ├── SQLAlchemy-2.0.25.dist-info
+    │           ├── __pycache__
+    │           ├── _pytest
+    │           ├── asgiref
+    │           ├── asgiref-3.7.2.dist-info
+    │           ├── attr
+    │           ├── attrs
+    │           ├── attrs-23.2.0.dist-info
+    │           ├── certifi
+    │           ├── certifi-2023.11.17.dist-info
+    │           ├── charset_normalizer
+    │           ├── charset_normalizer-3.3.2.dist-info
+    │           ├── coverage
+    │           ├── coverage-7.4.0.dist-info
+    │           ├── django
+    │           ├── djangorestframework-3.14.0.dist-info
+    │           ├── h11
+    │           ├── h11-0.14.0.dist-info
+    │           ├── idna
+    │           ├── idna-3.6.dist-info
+    │           ├── iniconfig
+    │           ├── iniconfig-2.0.0.dist-info
+    │           ├── outcome
+    │           ├── outcome-1.3.0.post0.dist-info
+    │           ├── packaging
+    │           ├── packaging-23.2.dist-info
+    │           ├── pip
+    │           ├── pip-23.3.2.dist-info
+    │           ├── pluggy
+    │           ├── pluggy-1.3.0.dist-info
+    │           ├── psycopg2
+    │           ├── psycopg2-2.9.9.dist-info
+    │           ├── psycopg2_binary-2.9.9.dist-info
+    │           ├── py.py
+    │           ├── pytest
+    │           ├── pytest-7.4.4.dist-info
+    │           ├── pytest-cov.pth
+    │           ├── pytest_asyncio
+    │           ├── pytest_asyncio-0.23.3.dist-info
+    │           ├── pytest_cov
+    │           ├── pytest_cov-4.1.0.dist-info
+    │           ├── pytest_django
+    │           ├── pytest_django-4.7.0.dist-info
+    │           ├── pytz
+    │           ├── pytz-2023.3.post1.dist-info
+    │           ├── requests
+    │           ├── requests-2.31.0.dist-info
+    │           ├── rest_framework
+    │           ├── selenium
+    │           ├── selenium-4.17.2.dist-info
+    │           ├── sniffio
+    │           ├── sniffio-1.3.0.dist-info
+    │           ├── socks.py
+    │           ├── sockshandler.py
+    │           ├── sortedcontainers
+    │           ├── sortedcontainers-2.4.0.dist-info
+    │           ├── sqlalchemy
+    │           ├── sqlparse
+    │           ├── sqlparse-0.4.4.dist-info
+    │           ├── trio
+    │           ├── trio-0.24.0.dist-info
+    │           ├── trio_websocket
+    │           ├── trio_websocket-0.11.1.dist-info
+    │           ├── typing_extensions-4.9.0.dist-info
+    │           ├── typing_extensions.py
+    │           ├── urllib3
+    │           ├── urllib3-2.1.0.dist-info
+    │           ├── wsproto
+    │           └── wsproto-1.2.0.dist-info
+    └── pyvenv.cfg

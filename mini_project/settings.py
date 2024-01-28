@@ -16,6 +16,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles' 
+STATICFILES_DIRS = [
+    BASE_DIR / "myapp/static",
+]
 
 
 # Quick-start development settings - unsuitable for production
@@ -80,7 +83,7 @@ DATABASES = {
         'NAME': 'myappdb',
         'USER': 'myappuser',
         'PASSWORD': 'myapppassword',
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -119,7 +122,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
