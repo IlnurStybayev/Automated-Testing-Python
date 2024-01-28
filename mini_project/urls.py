@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', task_list, name='task_list'),  # Маршрут для представления списка задач
     path('add-task/', views.create_task, name='create_task'),  # Маршрут для создания задачи
+    path('delete-task/<int:task_id>/', views.delete_task, name='delete_task'),
 ]

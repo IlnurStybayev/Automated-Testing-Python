@@ -3,33 +3,37 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Task List</title>
-    <script src="{% static 'js/task-actions.js' %}"></script>
-</head>
+    <head>
+        <title>Task List</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <script src="{% static 'js/task-actions.js' %}"></script>
+    </head>
 <body>
     <h1>Task List</h1>
-    <!-- Добавляем форму для создания новых задач -->
-    <form id="new-task-form" method="post" action="/add-task">
-        <input type="text" id="new-task-title" name="title" placeholder="Введите название задачи" required>
+    <!-- Форма для создания новых задач -->
+    <form id="new-task-form" method="post" action="/add-task/">
+        {% csrf_token %}
+        <input type="text" id="new-task-title" name="name" placeholder="Введите название задачи" required>
         <button type="submit" id="add-task-button">Добавить задачу</button>
     </form>
     <ul id="task-list">
         <!-- Итерация по задачам -->
         {% for task in tasks %}
             <li id="task-{{ task.id }}" class="task-item {% if task.completed %}completed{% else %}pending{% endif %}">
-                <span class="task-title">{{ task.title }}</span>
-                <!-- Кнопка для отметки задачи как завершенной -->
+                <span class="task-title">{{ task.name }}</span>
+                <!-- Кнопка для отметки задачи как завершенной (если есть такая функциональность) -->
                 {% if not task.completed %}
                     <button type="button" class="complete-task-button" data-task-id="{{ task.id }}">Завершить</button>
                 {% endif %}
-                <!-- Кнопка для удаления задачи -->
-                <button type="button" class="delete-task-button" data-task-id="{{ task.id }}">Удалить</button>
+                <!-- Форма для удаления задачи -->
+                <form action="{% url 'delete_task' task.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-task-button">Удалить</button>
+                </form>
             </li>
         {% endfor %}
     </ul>
-    <!-- Подключаем JavaScript для обработки событий кнопок -->
     <script src="{% static 'js/task-actions.js' %}"></script>
-
 </body>
 </html>
+

@@ -79,3 +79,6 @@ docker-compose.override.yml
 # Environment variables
 .env
 
+#LOGS
+debug_log.txt
+
