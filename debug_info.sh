@@ -2,18 +2,30 @@
 
 # debug_info.sh
 
-# chmod +x debug_info.sh Делаем скрипт исполняемым.
-# source debug_info.sh Запускаем
-# ls -l debug_info.sh проверяем точно ли файл debug_info.sh стал исполняемым
+LOG_FILE="debug_log.txt" # Имя файла для сохранения лога
 
-#!/bin/bash
-
-# debug_info.sh
-
-# Функция для добавления разделителя
+# Сохраняем лог в файл
 {
+# Функция для добавления разделителя
 print_divider() {
   echo "=================================================="
+}
+
+# Функция для проверки наличия команды
+check_command() {
+  if ! command -v "$1" &> /dev/null; then
+    echo "Команда $1 не найдена."
+    return 1
+  fi
+  return 0
+}
+
+# Функция для вывода информации о команде
+print_command_info() {
+  if check_command "$1"; then
+    echo "Используемая версия $1: $($1 --version)"
+    echo "Путь к $1: $(which "$1")"
+  fi
 }
 
 echo "==== Дата и время ===="
@@ -45,19 +57,20 @@ ps aux | grep python
 
 print_divider
 
-echo "==== Используемая версия Python ===="
-which python
-python3 --version
+echo "==== Используемая версия Python и путь ===="
+print_command_info python3
 
 print_divider
 
-echo "==== Установленные пакеты Python (pip list) ===="
-pip list
-
-print_divider
-
-echo "==== Замороженные зависимости (pip freeze) ===="
-pip freeze
+if check_command pip; then
+  echo "==== Установленные пакеты Python (pip list) ===="
+  pip list
+  
+  print_divider
+  
+  echo "==== Замороженные зависимости (pip freeze) ===="
+  pip freeze
+fi
 
 print_divider
 
@@ -67,17 +80,23 @@ uname -a
 print_divider
 
 echo "==== Состояние сетевых интерфейсов ===="
-ifconfig
+if check_command ifconfig; then
+  ifconfig
+fi
 
 print_divider
 
 echo "==== Текущие сетевые соединения ===="
-netstat -plntu
+if check_command netstat; then
+  netstat -plntu
+fi
 
 print_divider
 
 echo "==== Активные порты ===="
-lsof -i -P -n | grep LISTEN
+if check_command lsof; then
+  lsof -i -P -n | grep LISTEN
+fi
 
 print_divider
 
@@ -96,28 +115,28 @@ ping -c 4 google.com
 
 print_divider
 
-echo "==== Информация о Docker ===="
-docker info
+if check_command docker; then
+  echo "==== Информация о Docker ===="
+  docker info
 
-print_divider
+  print_divider
 
-echo "==== Состояние Docker контейнеров ===="
-docker ps -a
+  echo "==== Состояние Docker контейнеров ===="
+  docker ps -a
 
-print_divider
+  print_divider
 
-echo "==== Использование ресурсов Docker контейнерами ===="
-docker stats --no-stream
+  echo "==== Использование ресурсов Docker контейнерами ===="
+  docker stats --no-stream
 
-print_divider
+  print_divider
 
-echo "==== Логи Docker контейнеров ===="
-# Замените "container_name" на имя вашего контейнера
-# docker logs container_name
+  echo "==== Логи Docker контейнеров ===="
+  # Замените "container_name" на имя вашего контейнера
+  # docker logs container_name
+fi
 
 print_divider
 
 echo "==== Конец отладочной информации ===="
-
-# Сохранение лога в файл
-} >> debug_log.txt 2>&1
+} >> "$LOG_FILE" 2>&1

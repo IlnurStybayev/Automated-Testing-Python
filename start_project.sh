@@ -1,103 +1,148 @@
 #!/bin/bash
 # start_project.sh
 
-# chmod +x start_project.sh Делаем скрипт исполняемым.
-# source start_project.sh Запускаем
-# ls -l start_project.sh проверяем точно ли файл Setup стал исполняемым
+LOG_FILE="start_project_log.txt"
 
-echo "Запуск Docker-контейнера с базой данных..."
-docker-compose up -d db
+# Логирование
+log() {
+    echo "$(date +"%Y-%m-%d %H:%M:%S") - $1" | tee -a "$LOG_FILE"
+}
 
-if [ $? -ne 0 ]; then
-  echo "Ошибка: Не удалось запустить Docker-контейнер с базой данных."
-  exit 1
+# Список выполненных команд
+declare -A command_status
+
+# Получаем абсолютный путь к текущей директории
+PROJECT_DIR=$(pwd)
+
+log "Запуск Docker-контейнера с базой данных..."
+if docker-compose up -d db; then
+    log "Docker-контейнер с базой данных запущен успешно."
+    command_status["Docker-контейнер с базой данных"]="Выполнено"
+else
+    log "Ошибка: Не удалось запустить Docker-контейнер с базой данных."
+    command_status["Docker-контейнер с базой данных"]="Ошибка"
+    exit 1
 fi
 
-echo "Ожидание запуска базы данных..."
-sleep 10 # Ожидание нескольких секунд, чтобы убедиться, что база данных полностью запущена
+log "Ожидание запуска базы данных..."
+sleep 10
+command_status["Ожидание запуска базы данных"]="Выполнено"
 
-# Проверяем наличие директории виртуального окружения
+# Проверяем наличие виртуального окружения. Если его нет, создаем.
 if [ ! -d "venv" ]; then
-  echo "Виртуальное окружение не найдено. Пожалуйста, создайте его с помощью 'python -m venv venv'."
-  exit 1
+    log "Виртуальное окружение не найдено. Создание нового..."
+    if python3 -m venv venv; then
+        log "Виртуальное окружение создано успешно."
+        command_status["Создание виртуального окружения"]="Выполнено"
+    else
+        log "Не удалось создать виртуальное окружение."
+        command_status["Создание виртуального окружения"]="Ошибка"
+        exit 1
+    fi
+else
+    command_status["Проверка виртуального окружения"]="Пропущено (уже существует)"
 fi
 
-# Активируем виртуальное окружение
-source venv/bin/activate
-
-if [ $? -ne 0 ]; then
-  echo "Не удалось активировать виртуальное окружение."
-  exit 1
+# Активация виртуального окружения
+log "Активация виртуального окружения..."
+if source venv/bin/activate; then
+    log "Виртуальное окружение активировано."
+    command_status["Активация виртуального окружения"]="Выполнено"
+else
+    log "Не удалось активировать виртуальное окружение."
+    command_status["Активация виртуального окружения"]="Ошибка"
+    exit 1
 fi
 
 # Устанавливаем зависимости из файла requirements.txt
-if ! pip install -r requirements.txt; then
-  echo "Ошибка установки зависимостей из requirements.txt."
-  exit 1
+if [ -f requirements.txt ]; then
+    log "Установка зависимостей из файла requirements.txt..."
+    if python3 -m pip install -r requirements.txt; then
+        log "Все зависимости из requirements.txt установлены."
+        command_status["Установка зависимостей"]="Выполнено"
+    else
+        log "Не удалось установить зависимости из requirements.txt."
+        command_status["Установка зависимостей"]="Ошибка"
+        exit 1
+    fi
+else
+    log "Файл requirements.txt не найден. Установка зависимостей пропущена."
+    command_status["Установка зависимостей"]="Пропущено (файл не найден)"
 fi
-
-echo "Все зависимости из requirements.txt установлены успешно."
 
 # Применяем миграции
-if ! python manage.py migrate; then
-  echo "Ошибка применения миграций."
-  exit 1
+log "Применение миграций..."
+if python manage.py migrate; then
+    log "Миграции применены успешно."
+    command_status["Применение миграций"]="Выполнено"
+else
+    log "Ошибка применения миграций."
+    command_status["Применение миграций"]="Ошибка"
+    exit 1
 fi
 
-echo "Миграции применены успешно."
+# Функция для сохранения зависимостей в requirements.txt
+save_requirements() {
+    if pip freeze > requirements.txt; then
+        log "Зависимости сохранены в requirements.txt"
+        command_status["Сохранение зависимостей"]="Выполнено"
+    else
+        log "Ошибка при сохранении зависимостей."
+        command_status["Сохранение зависимостей"]="Ошибка"
+    fi
+}
 
-# python manage.py collectstatic
-
-# Запускаем сервер разработки
-if ! python manage.py runserver 0.0.0.0:8002; then
-  echo "Не удалось запустить сервер разработки."
-  exit 1
+# Проверяем аргументы скрипта
+if [[ "$1" == "save-req" ]]; then
+    save_requirements
 fi
-echo "Сервер разработки запущен на порту 8002."
 
+log "Запуск сервера разработки..."
+if python manage.py runserver 0.0.0.0:8002 &; then
+    SERVER_PID=$!
+    log "Сервер разработки запущен на порту 8002. PID: $SERVER_PID"
+    command_status["Запуск сервера разработки"]="Выполнено"
+else
+    log "Ошибка при запуске сервера разработки."
+    command_status["Запуск сервера разработки"]="Ошибка"
+    exit 1
+fi
 
 # Удаление кеша и временных файлов pytest
-rm -rf .pytest_cache
-
-echo "Виртуальное окружение активировано и все зависимости установлены."
-
-
-echo "Открытие веб-сайта в браузере по адресу http://localhost:8002..."
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    open http://localhost:8002
-echo "Открытие веб-сайта в браузере по адресу http://localhost:8002..."
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    xdg-open http://localhost:8002
-echo "Открытие веб-сайта в браузере по адресу http://localhost:8002..."
-elif [[ "$OSTYPE" == "msys"* ]]; then
-    start http://localhost:8002
+if [ -d .pytest_cache ]; then
+    rm -rf .pytest_cache
+    log "Кеш и временные файлы pytest удалены."
+    command_status["Удаление кеша pytest"]="Выполнено"
 else
-    echo "Неизвестная операционная система"
+    log "Кеш pytest не найден. Удаление пропущено."
+    command_status["Удаление кеша pytest"]="Пропущено (не найден)"
 fi
 
-echo "Открытие веб-сайта в браузере по адресу http://localhost:8002..."
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    open http://127.0.0.1:8002
-echo "Открытие веб-сайта в браузере по адресу http://localhost:8002..."
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    xdg-open http://127.0.0.1:8002
-echo "Открытие веб-сайта в браузере по адресу http://localhost:8002..."
-elif [[ "$OSTYPE" == "msys"* ]]; then
-    start http://127.0.0.1:8002
+# Открытие веб-сайта в браузере
+open_site() {
+    log "Открытие веб-сайта в браузере по адресу $1..."
+    case "$OSTYPE" in
+        "darwin"*)  open $1;;
+        "linux-gnu"*) xdg-open $1;;
+        "msys"*) start $1;;
+        *) log "Неизвестная операционная система";;
+    esac
+}
+
+# Открываем сайт в браузере, если сервер запущен
+if [ -n "$SERVER_PID" ]; then
+    open_site http://localhost:8002
+    command_status["Открытие сайта"]="Выполнено"
 else
-    echo "Неизвестная операционная система"
+    log "Сервер разработки не был запущен. Открытие сайта пропущено."
+    command_status["Открытие сайта"]="Пропущено (сервер не запущен)"
 fi
 
+# Выводим список выполненных команд
+log "Список выполненных команд:"
+for cmd in "${!command_status[@]}"; do
+    log "$cmd: ${command_status[$cmd]}"
+done
 
-echo "Открытие веб-сайта в браузере по адресу http://localhost:8081..."
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    open http://localhost:8081
-echo "Открытие веб-сайта в браузере по адресу http://localhost:8081..."
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    xdg-open http://localhost:8081
-echo "Открытие веб-сайта в браузере по адресу http://localhost:8081..."
-elif [[ "$OSTYPE" == "msys"* ]]; then
-    start http://localhost:8081
-else
-    echo "Неизвестная операционная система"
-fi
+
+# export DJANGO_SETTINGS_MODULE=mini_project.settings

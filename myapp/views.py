@@ -19,7 +19,8 @@ def delete_task(request, task_id):
         task = get_object_or_404(Task, id=task_id)
         # Удалите задачу
         task.delete()
-        return HttpResponse("Задача успешно удалена")
+        # return HttpResponse("Задача успешно удалена")
+        return redirect('task_list')
     except Task.DoesNotExist:
         return HttpResponse("Задача не найдена", status=404)
     except Exception as e:

@@ -81,4 +81,6 @@ docker-compose.override.yml
 
 #LOGS
 debug_log.txt
+start_project_log.txt
+stop_project_log.txt
 

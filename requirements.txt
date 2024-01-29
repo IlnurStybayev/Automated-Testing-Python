@@ -6,7 +6,6 @@ psycopg2
 selenium
 djangorestframework
 requests
-pytest
-pytest-asyncio
+pytest-django
 
 
