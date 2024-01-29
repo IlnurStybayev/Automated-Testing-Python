@@ -16,7 +16,7 @@
 - Selenium WebDriver
 ## Использование
 После запуска проекта, вы можете перейти к следующим URL:
-- `http://localhost:8000` - Главная страница веб-приложения.
+- `http://localhost:8002` - Главная страница веб-приложения.
 - `http://localhost:8081` - Интерфейс базы данных.
 Для входа в систему используйте предварительно созданные учетные данные или зарегистрируйтесь для создания новой учетной записи.
 ## Примеры работы с приложением:
@@ -69,16 +69,10 @@ pip install -r requirements.txt
 3. Getting Started
 
 Запуск проекта (включая веб-приложение, базу данных и миграции) одной командой:
-./start_project.sh
-(chmod +x start_project.sh)
+chmod +x start_project.sh Делаем скрипт исполняемым.
+ls -l start_project.sh проверяем точно ли файл start_project.sh стал исполняемым
 
-To start the web application, run the following command:
-
-docker-compose up -d
-
-http://localhost:8000
-http://localhost:8081
-http://127.0.0.1:8000
+source start_project.sh Запускаем
 
 4. Running Migrations
 

@@ -4,7 +4,7 @@
 import pytest
 from django.urls import reverse
 from django.test import TestCase, Client
-from .models import Task
+from myapp.models import Task
 
 
        
