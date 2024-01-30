@@ -1,14 +1,25 @@
-# myapp/tests/test_selenium.py
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 import logging
+import unittest
 
 # Настройка логирования
-logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('selenium_tests')
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# Консольный вывод
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(formatter)
+logger.addHandler(console_handler)
+
+# Файловый вывод
+file_handler = logging.FileHandler('selenium_tests.log')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 class TaskSeleniumTests(StaticLiveServerTestCase):
     @classmethod
@@ -17,7 +28,7 @@ class TaskSeleniumTests(StaticLiveServerTestCase):
         # Если вы используете Chrome, убедитесь, что chromedriver установлен и находится в PATH.
         cls.selenium = webdriver.Chrome()
         cls.selenium.implicitly_wait(20)  # Увеличиваем время ожидания до 20 секунд
-        logging.info('Настройка веб-драйвера завершена.')
+        logger.info('Настройка веб-драйвера завершена.')
 
     def test_create_task(self):
         # Шаг 1: Открытие главной страницы
@@ -34,34 +45,34 @@ class TaskSeleniumTests(StaticLiveServerTestCase):
         self.delete_task_and_verify(task_name)
 
     def open_main_page(self):
-        logging.info("Шаг 1: Открытие главной страницы.")
+        logger.info("Шаг 1: Открытие главной страницы.")
         self.selenium.get(self.live_server_url)
 
     def add_new_task(self, task_name):
-        logging.info("Шаг 2: Поиск поля ввода и кнопки для добавления задачи.")
+        logger.info("Шаг 2: Поиск поля ввода и кнопки для добавления задачи.")
         task_input = self.selenium.find_element(By.ID, 'new-task-title')
         submit_button = self.selenium.find_element(By.ID, 'add-task-button')
 
-        logging.info(f"Шаг 3: Ввод текста задачи '{task_name}' и нажатие кнопки добавления.")
+        logger.info(f"Шаг 3: Ввод текста задачи '{task_name}' и нажатие кнопки добавления.")
         task_input.send_keys(task_name)
         submit_button.click()
 
-        logging.info("Шаг 4: Ожидание появления списка задач.")
+        logger.info("Шаг 4: Ожидание появления списка задач.")
         WebDriverWait(self.selenium, 20).until(
             EC.presence_of_element_located((By.ID, 'task-list'))
         )
 
     def verify_task_presence(self, task_name):
-        logging.info("Шаг 5: Поиск элементов задачи и извлечение текста.")
+        logger.info("Шаг 5: Поиск элементов задачи и извлечение текста.")
         task_items = self.selenium.find_elements(By.CLASS_NAME, 'task-item')
         task_titles = [item.find_element(By.CLASS_NAME, 'task-title').text.strip() for item in task_items]
 
-        logging.info(f"Извлеченные заголовки задач: {task_titles}")
-        logging.info(f"Проверка наличия '{task_name}' в заголовках задач.")
+        logger.info(f"Извлеченные заголовки задач: {task_titles}")
+        logger.info(f"Проверка наличия '{task_name}' в заголовках задач.")
         assert task_name in task_titles, f"'{task_name}' не найден в списке задач."
 
     def delete_task_and_verify(self, task_name):
-        logging.info("Шаг 6: Удаление задачи и проверка её отсутствия.")
+        logger.info("Шаг 6: Удаление задачи и проверка её отсутствия.")
         task_items = self.selenium.find_elements(By.CLASS_NAME, 'task-item')
         for item in task_items:
             task_title = item.find_element(By.CLASS_NAME, 'task-title').text.strip()
@@ -76,5 +87,4 @@ class TaskSeleniumTests(StaticLiveServerTestCase):
         )
 
 if __name__ == '__main__':
-    import unittest
     unittest.main()

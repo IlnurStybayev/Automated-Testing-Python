@@ -1,52 +1,90 @@
+/* Общие стили для страницы */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
+    font-family: Arial, sans-serif; /* Задает шрифт для всего документа */
+    background-color: #f4f4f4; /* Цвет фона для всего документа */
+    margin: 0; /* Убирает отступы по умолчанию у body */
+    padding: 20px; /* Добавляет отступы вокруг содержимого body */
 }
 
+/* Стили для формы создания задачи */
 #new-task-form {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Отступ снизу для формы */
 }
 
 input[type="text"] {
-    padding: 10px;
-    margin-right: 10px;
-    width: 300px;
-    border: 1px solid #ddd;
+    padding: 10px; /* Внутренние отступы для текстовых полей */
+    margin-right: 10px; /* Отступ справа для текстовых полей */
+    width: 300px; /* Ширина текстовых полей */
+    border: 1px solid #ddd; /* Граница для текстовых полей */
 }
 
 button {
-    padding: 10px 15px;
-    background-color: #5cb85c;
-    color: white;
-    border: none;
-    cursor: pointer;
+    padding: 10px 15px; /* Внутренние отступы для кнопок */
+    background-color: #5cb85c; /* Цвет фона для кнопок */
+    color: white; /* Цвет текста для кнопок */
+    border: none; /* Убирает границу у кнопок */
+    cursor: pointer; /* Изменяет курсор на указатель при наведении на кнопки */
 }
 
 button:hover {
-    background-color: #4cae4c;
+    background-color: #4cae4c; /* Цвет фона для кнопок при наведении */
 }
 
+/* Стили для элементов задачи */
 .task-item {
-    background-color: white;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background-color: white; /* Цвет фона для элементов задачи */
+    padding: 10px; /* Внутренние отступы для элементов задачи */
+    margin-bottom: 10px; /* Отступ снизу для каждого элемента задачи */
+    border-radius: 5px; /* Скругление углов элементов задачи */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для элементов задачи */
+    display: flex; /* Использует flexbox для выравнивания содержимого элементов задачи */
+    align-items: center; /* Центрирует содержимое элементов задачи по вертикали */
+    justify-content: space-between; /* Распределяет содержимое элементов задачи на равные расстояния */
 }
 
 .task-title {
-    margin: 0;
+    margin: 0; /* Убирает отступы у заголовков задач */
 }
 
+/* Стили для кнопки удаления задачи */
 .delete-task-button {
-    background-color: #d9534f;
+    background-color: #d9534f; /* Цвет фона для кнопок удаления */
 }
 
 .delete-task-button:hover {
-    background-color: #c9302c;
+    background-color: #c9302c; /* Цвет фона для кнопок удаления при наведении */
+}
+
+/* Стили для модального окна */
+.modal {
+    display: none; /* По умолчанию модальное окно не отображается */
+    position: fixed; /* Фиксированное позиционирование, чтобы модальное окно оставалось на месте при прокрутке */
+    top: 50%; /* Расположение модального окна по вертикали */
+    left: 50%; /* Расположение модального окна по горизонтали */
+    transform: translate(-50%, -50%); /* Центрирует модальное окно */
+    background-color: white; /* Цвет фона модального окна */
+    padding: 20px; /* Внутренние отступы модального окна */
+    border-radius: 5px; /* Скругление углов модального окна */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
+    z-index: 1; /* Устанавливает стековый порядок модального окна */
+}
+
+.modal-content {
+    display: flex; /* Использует flexbox для выравнивания содержимого модального окна */
+    flex-direction: column; /* Располагает содержимое модального окна вертикально */
+    align-items: center; /* Центрирует содержимое модального окна по горизонтали */
+}
+
+/* Стили для кнопки "Сохранить изменения" в модальном окне */
+#save-edit-task {
+    margin-top: 10px; /* Отступ сверху для кнопки */
+    background-color: #5bc0de; /* Цвет фона для кнопки */
+    color: white; /* Цвет текста для кнопки */
+    border: none; /* Убирает границу у кнопки */
+    padding: 10px 15px; /* Внутренние отступы для кнопки */
+    cursor: pointer; /* Изменяет курсор на указатель при наведении на кнопку */
+}
+
+#save-edit-task:hover {
+    background-color: #46b8da; /* Цвет фона для кнопки при наведении */
 }

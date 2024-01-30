@@ -72,7 +72,9 @@ pip install -r requirements.txt
 chmod +x start_project.sh Делаем скрипт исполняемым.
 ls -l start_project.sh проверяем точно ли файл start_project.sh стал исполняемым
 
-source start_project.sh Запускаем
+source start_project.sh Запускаем проект
+export DJANGO_SETTINGS_MODULE=mini_project.settings
+python manage.py collectstatic 
 
 4. Running Migrations
 

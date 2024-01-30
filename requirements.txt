@@ -7,5 +7,6 @@ selenium
 djangorestframework
 requests
 pytest-django
+pytest-asyncio
 
 

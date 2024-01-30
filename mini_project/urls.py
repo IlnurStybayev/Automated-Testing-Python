@@ -21,7 +21,12 @@ from myapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', task_list, name='task_list'),  # Маршрут для представления списка задач
-    path('add-task/', views.create_task, name='create_task'),  # Маршрут для создания задачи
+    path('', task_list, name='task_list'),
+    path('add-task/', views.create_task, name='create_task'),
     path('delete-task/<int:task_id>/', views.delete_task, name='delete_task'),
+    path('edit-task/<int:task_id>/', views.edit_task, name='edit_task'),
+    path('save-task/<int:task_id>/', views.save_task, name='save_task'),
+    path('update-task/<int:task_id>/', views.update_task, name='update_task'),
 ]
+
+

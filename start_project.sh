@@ -3,7 +3,7 @@
 
 LOG_FILE="start_project_log.txt"
 
-# Логирование
+# Функция логирования
 log() {
     echo "$(date +"%Y-%m-%d %H:%M:%S") - $1" | tee -a "$LOG_FILE"
 }
@@ -13,6 +13,21 @@ declare -A command_status
 
 # Получаем абсолютный путь к текущей директории
 PROJECT_DIR=$(pwd)
+
+# Функция для ожидания готовности базы данных
+wait_for_db() {
+    echo "Ожидание запуска базы данных..."
+    for i in {1..10}; do
+        if docker-compose exec db pg_isready -h localhost -U myappuser; then
+            echo "База данных запущена."
+            return 0
+        fi
+        echo "База данных еще не запущена, ожидание..."
+        sleep 1
+    done
+    echo "Таймаут ожидания запуска базы данных."
+    return 1
+}
 
 log "Запуск Docker-контейнера с базой данных..."
 if docker-compose up -d db; then
@@ -24,8 +39,8 @@ else
     exit 1
 fi
 
-log "Ожидание запуска базы данных..."
-sleep 10
+# Ожидание запуска базы данных
+wait_for_db
 command_status["Ожидание запуска базы данных"]="Выполнено"
 
 # Проверяем наличие виртуального окружения. Если его нет, создаем.
@@ -48,6 +63,18 @@ log "Активация виртуального окружения..."
 if source venv/bin/activate; then
     log "Виртуальное окружение активировано."
     command_status["Активация виртуального окружения"]="Выполнено"
+    
+    # Установка переменной среды для Django
+    log "Установка переменной среды DJANGO_SETTINGS_MODULE..."
+    export DJANGO_SETTINGS_MODULE=mini_project.settings
+    if [ -z "${DJANGO_SETTINGS_MODULE}" ]; then
+        log "Ошибка: Переменная DJANGO_SETTINGS_MODULE не установлена."
+        command_status["Установка переменной среды DJANGO_SETTINGS_MODULE"]="Ошибка"
+        exit 1
+    else
+        log "Переменная среды DJANGO_SETTINGS_MODULE установлена успешно."
+        command_status["Установка переменной среды DJANGO_SETTINGS_MODULE"]="Выполнено"
+    fi
 else
     log "Не удалось активировать виртуальное окружение."
     command_status["Активация виртуального окружения"]="Ошибка"
@@ -144,5 +171,5 @@ for cmd in "${!command_status[@]}"; do
     log "$cmd: ${command_status[$cmd]}"
 done
 
-
-# export DJANGO_SETTINGS_MODULE=mini_project.settings
+# Обработка выхода из скрипта
+trap 'kill $SERVER_PID; exit' SIGINT SIGTERM
