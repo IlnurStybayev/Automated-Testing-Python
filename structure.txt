@@ -67,7 +67,7 @@
 │   ├── style.css
 │   └── test_selenium_py.html
 ├── manage.py
-├── mini_project
+├── config
 │   ├── __init__.py
 │   ├── asgi.py
 │   ├── settings.py

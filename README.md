@@ -38,7 +38,7 @@
 Этот проект распространяется под лицензией MIT, полный текст которой можно найти в файле LICENSE в корне репозитория.
 ## Структура проекта
 Описание структуры проекта и основных компонентов.
-`mini_project/`
+`config/`
 - `settings.py`:        Настройки проекта Django.
 - `urls.py`    :        Определение URL-адресов проекта.
 `myapp/`
@@ -60,7 +60,7 @@ pytest --html=report.html
 
 git clone git@github.com:IlnurStybayev/Automated-Testing-Python.git
 
-cd mini_project
+cd config
 
 2.  Install dependencies:
 
@@ -74,7 +74,7 @@ ls -l start_project.sh проверяем точно ли файл start_project
 
 
 source start_project.sh Запускаем проект
-export DJANGO_SETTINGS_MODULE=mini_project.settings
+export DJANGO_SETTINGS_MODULE=config.settings
 python manage.py collectstatic 
 
 
@@ -117,10 +117,13 @@ docker-compose exec web python -c "import psycopg2; conn = psycopg2.connect('dbn
 4. Работа с миграциями
 docker-compose exec web python manage.py migrate                    - Запуск миграций Django.
 5. Просмотр информации о сети
-docker network inspect mini_project_default                         - Просмотр информации о сети Docker.
+docker network inspect config_default                         - Просмотр информации о сети Docker.
 tcpdump -n -i any port 5432                                         - Просмотр сетевого трафика между контейнерами с помощью tcpdump
 nc -z db 5432                                                       - Проверка доступности порта базы данных.
 lsof -i :8000                                                       - Проверка занятости порта 8000.
+ps aux | grep PROCESS_NAME
+kill 8000
+kill -9 8000
 6. Миграции 
 docker-compose exec web python manage.py makemigrations myapp       - Создание Новых Миграций
 docker-compose exec web python manage.py migrate                    - Применение Миграций:

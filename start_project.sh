@@ -66,7 +66,7 @@ if source venv/bin/activate; then
     
     # Установка переменной среды для Django
     log "Установка переменной среды DJANGO_SETTINGS_MODULE..."
-    export DJANGO_SETTINGS_MODULE=mini_project.settings
+    export DJANGO_SETTINGS_MODULE=config.settings
     if [ -z "${DJANGO_SETTINGS_MODULE}" ]; then
         log "Ошибка: Переменная DJANGO_SETTINGS_MODULE не установлена."
         command_status["Установка переменной среды DJANGO_SETTINGS_MODULE"]="Ошибка"
