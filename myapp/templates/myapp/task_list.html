@@ -3,37 +3,49 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Task List</title>
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <script src="{% static 'js/task-actions.js' %}"></script>
-    </head>
-<body>
-    <h1>Task List</h1>
-    <!-- Форма для создания новых задач -->
-    <form id="new-task-form" method="post" action="/add-task/">
-        {% csrf_token %}
-        <input type="text" id="new-task-title" name="name" placeholder="Введите название задачи" required>
-        <button type="submit" id="add-task-button">Добавить задачу</button>
-    </form>
-    <ul id="task-list">
-        <!-- Итерация по задачам -->
-        {% for task in tasks %}
-            <li id="task-{{ task.id }}" class="task-item {% if task.completed %}completed{% else %}pending{% endif %}">
-                <span class="task-title">{{ task.name }}</span>
-                <!-- Кнопка для отметки задачи как завершенной (если есть такая функциональность) -->
-                {% if not task.completed %}
-                    <button type="button" class="complete-task-button" data-task-id="{{ task.id }}">Завершить</button>
-                {% endif %}
-                <!-- Форма для удаления задачи -->
-                <form action="{% url 'delete_task' task.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="delete-task-button">Удалить</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+<head>
+    <title>Task List</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <script src="{% static 'js/task-actions.js' %}"></script>
+</head>
+<body>
+<h1>Task List</h1>
+<!-- Форма для создания новых задач -->
+<form id="new-task-form" method="post" action="{% url 'create_task' %}">
+    {% csrf_token %}
+    <input type="text" id="new-task-title" name="name" placeholder="Введите название задачи" required>
+    <button type="submit" id="add-task-button">Добавить задачу</button>
+</form>
+<ul id="task-list">
+    <!-- Итерация по задачам -->
+    {% for task in tasks %}
+    <li id="task-{{ task.id }}" class="task-item {% if task.completed %}completed{% else %}pending{% endif %}">
+        <span class="task-title">{{ task.name }}</span>
+        <!-- Кнопка для отметки задачи как завершенной (если есть такая функциональность) -->
+        {% if not task.completed %}
+        <button type="button" class="complete-task-button" data-task-id="{{ task.id }}">Завершить</button>
+        {% endif %}
+        <!-- Кнопка для редактирования задачи -->
+        <button type="button" class="edit-task-button" data-task-id="{{ task.id }}">Редактировать</button>
+        <!-- Форма для удаления задачи -->
+        <form action="{% url 'delete_task' task.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="delete-task-button">Удалить</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+<!-- Модальное окно для редактирования задачи -->
+<div id="edit-task-modal" class="modal">
+    <div class="modal-content">
+        <input type="text" id="edit-task-title" name="name" placeholder="Введите новое название задачи" required>
+        <button type="button" id="save-edit-task">Сохранить изменения</button>
+    </div>
+</div>
+
+<script>
+    // JavaScript-код для обработки событий модального окна находится здесь
+    // ...
+</script>
 </body>
 </html>
-
