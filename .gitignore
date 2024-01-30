@@ -100,7 +100,7 @@ docker-compose.override.yml
 *log.txt
 
 # Staticfiles
-staticfiles
+staticfiles/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

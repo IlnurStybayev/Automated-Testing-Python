@@ -119,6 +119,9 @@ docker network inspect mini_project_default                         - Просм
 tcpdump -n -i any port 5432                                         - Просмотр сетевого трафика между контейнерами с помощью tcpdump
 nc -z db 5432                                                       - Проверка доступности порта базы данных.
 lsof -i :8000                                                       - Проверка занятости порта 8000.
+ps aux | grep PROCESS_NAME
+kill 8000
+kill -9 8000
 6. Миграции 
 docker-compose exec web python manage.py makemigrations myapp       - Создание Новых Миграций
 docker-compose exec web python manage.py migrate                    - Применение Миграций:
